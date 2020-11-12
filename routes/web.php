@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\TasksController;
+use App\Http\Controllers\ObjectCreateController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,10 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::post('/tasks', [TasksController::class, 'comment']);
+Route::post('/product-company-create', [ObjectCreateController::class, 'productCreate']);
+
+Route::post('/news-company-create', [ObjectCreateController::class, 'newsCreate']);
+
+Route::post('/news-company-subscribe', [UserController::class, 'newsSubscribe']);
+
+Route::post('/products-company-subscribe', [UserController::class, 'productsSubscribe']);

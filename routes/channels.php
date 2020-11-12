@@ -18,4 +18,10 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 /////////////////////////////////////
 Broadcast::routes(['middleware' => ['web', 'auth']]);
-Broadcast::channel('chat.{task_id}', \App\Broadcasting\MessagesChannel::class);
+//Broadcast::channel('chat.{task_id}', \App\Broadcasting\MessagesChannel::class);
+Broadcast::channel('news_for_user', function ($user) {
+    return $user->news_subscribe;
+});
+Broadcast::channel('products_for_user', function ($user) {
+    return $user->products_subscribe;
+});

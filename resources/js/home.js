@@ -1,51 +1,65 @@
-//console.log('home.js is loaded');
+Echo
+    .channel(`news_for_user`)
+    .listen('NewsCreated', (e) => {
+        console.log(e);
+        alert('Для вас доступна новая новость!');
+    });
 
 Echo
-    .private(`chat.${comments.channel}`)
-    .listen('ChatMessage', (e) => {
-        /**
-         * Действия, происходящие при получении события клиентом
-         * напр. console.log(e);
-         */
-        console.log(comments);
-        // comments.list.find('ul > li.empty').remove();
-        // comments.list.find('ul').append(e.view);
-        // comments.count.text(parseInt(comments.count.text()) + 1);
-        // comments.list.scrollTop(9999999999);
-        // comments.sound.play();
+    .channel(`products_for_user`)
+    .listen('ProductCreated', (e) => {
+        console.log(e);
+        alert('Для вас доступeн новый продукт!');
     });
+
+function addAction(actionName)
+{
+    let actionUrlPath;
+    let actionHtmlId;
+    switch (actionName) {
+        case 'product-company-create':
+            actionHtmlId='product-company-button';
+            actionUrlPath='/product-company-create';
+            break;
+        case 'news-company-create':
+            actionHtmlId='news-company-button';
+            actionUrlPath='/news-company-create';
+            break;
+        case 'news-company-subscribe':
+            actionHtmlId='news-company-subscribe-button';
+            actionUrlPath='/news-company-subscribe';
+            break;
+        case 'product-company-subscribe':
+            actionHtmlId='product-company-subscribe-button';
+            actionUrlPath='/products-company-subscribe';
+            break;
+        default:
+            return false;
+    }
+    $('#' + actionHtmlId).on('click',function(){
+        $.ajax({
+            url: actionUrlPath,
+            type: "POST",
+            data: {},
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                if (data) alert(data);
+            },
+            error: function (msg) {
+                console.log('addAction() error! Message:');
+                console.log(msg);
+            }
+        });
+    });
+
+}
 
 $(document).ready( function ()
 {
-    $('#comment_add_button').on('click',function(){
-
-        $.ajax({
-
-            url: "/tasks",
-
-            type: "POST",
-
-            data: {some_data:'some_data'},
-
-            headers: {
-
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-
-            },
-
-            success: function (data) {
-                console.log(data);
-                alert( 'ajax is succeed' );
-            },
-
-            error: function (msg) {
-
-                alert( 'ajax is failed' );
-
-            }
-
-        });
-
-    });
-
+    addAction('product-company-create');
+    addAction('news-company-create');
+    addAction('news-company-subscribe');
+    addAction('product-company-subscribe');
 });
