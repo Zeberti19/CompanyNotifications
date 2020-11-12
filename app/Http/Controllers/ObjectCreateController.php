@@ -16,8 +16,8 @@ class ObjectCreateController extends Controller
         $ProductCompany->price= rand(0,100000) *0.01;
 
         $ProductCompany->save();
-        event(new NewsCreated());
-        broadcast(new NewsCreated());
+        event(new ProductCreated());
+        broadcast(new ProductCreated())->toOthers();
     }
 
     public function newsCreate()
@@ -28,7 +28,7 @@ class ObjectCreateController extends Controller
 
         $NewCompany->save();
 
-        event(new ProductCreated());
-        broadcast(new ProductCreated());
+        event(new NewsCreated());
+        broadcast(new NewsCreated())->toOthers();
     }
 }
