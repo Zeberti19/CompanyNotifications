@@ -14,8 +14,8 @@ class AddNewFieldsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('news_subscribed');
-            $table->boolean('products_subscribed');
+            $table->boolean('news_subscribed')->default(0);
+            $table->boolean('products_subscribed')->default(0);
         });
     }
 
