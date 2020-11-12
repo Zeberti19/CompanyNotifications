@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
-Broadcast::channel('news.{userId}', function ($user, $newsId) {
-    return $user->id === Order::findOrNew($newsId)->user_id;
-});
+/////////////////////////////////////
+Broadcast::routes(['middleware' => ['web', 'auth']]);
+Broadcast::channel('chat.{task_id}', \App\Broadcasting\MessagesChannel::class);
